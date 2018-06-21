@@ -10,19 +10,13 @@ namespace JapaneseApp
         static JsonController jsonController = new JsonController();
         RootObject jsonObject;
 
-
-        FlickrApi flickrApi;
-
         List<RichTextBox> richTextBoxes;
-        List<RadioButton> imageQualityRadioButtons;
 
         public Form1()
         {
             InitializeComponent();
-            
-            flickrApi = new FlickrApi();
 
-            //put all of the RichTextboxes into a list
+            //put all of the RichTextboxes into a list too clear them all 
             richTextBoxes = new List<RichTextBox>();
             foreach (Control control in Controls)
             {
@@ -30,21 +24,14 @@ namespace JapaneseApp
                     richTextBoxes.Add((RichTextBox)control);
             }
 
-            //put all the imageQualityRadioButtons into a list
-            imageQualityRadioButtons = new List<RadioButton>();
-            foreach (Control control in ImageQualityTableLayoutPanel.Controls)
-            {
-                if (control.GetType() == typeof(RadioButton))
-                    imageQualityRadioButtons.Add((RadioButton)control);
-            }
-
-
-            imageQualityRadioButtons.Add(thumbnailRadioButton);
-            imageQualityRadioButtons.Add(smallRadioButton);
-            imageQualityRadioButtons.Add(mediumRadioButton);
         }
 
         #region Button Clicks
+
+        public void Search(string searchText)
+        {
+            jsonObject = jsonController.setJson(searchText);
+        }
 
         private void searchButton_Click(object sender, EventArgs e)
         {
@@ -72,16 +59,7 @@ namespace JapaneseApp
             {
                 jsonController.nextResult();
                 UpdateText();
-                if (onRadioButton.Checked)
-                {
-                    SearchImage(suggestedSearch);
-                }
             }
-        }
-
-        private void flickrImageSearchButton_Click(object sender, EventArgs e)
-        {
-            SearchImage(imageTagSearchBox.Text);
         }
 
         #endregion
@@ -99,49 +77,17 @@ namespace JapaneseApp
         {
             FontDialog fd = new FontDialog();
             fd.ShowDialog();
-          //  japaneseTextBox.Font = fd.Font;
             dataGridView1.Font = fd.Font;
-
         }
 
+        private void zoomedCellToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FontDialog fd = new FontDialog();
+            fd.ShowDialog();
+            EnhanceTextBox.Font = fd.Font;
+        }
         #endregion
 
-        #region RadioButtons
-
-        #region imageQuality RadioButtons
-
-        private void smallRadioButton_CheckedChanged(object sender, EventArgs e)
-        {
-            ChangeImageQuality(smallRadioButton);
-        }
-
-        private void thumbnailRadioButton_CheckedChanged(object sender, EventArgs e)
-        {
-            ChangeImageQuality(thumbnailRadioButton);
-        }
-
-        private void mediumRadioButton_CheckedChanged(object sender, EventArgs e)
-        {
-            ChangeImageQuality(mediumRadioButton);
-        }
-
-        public void ChangeImageQuality(RadioButton radioButton)
-        {
-            string imageLocation = flickrApi.Search(flickrApi.lastSearchString, radioButton.Name);
-
-            if (imageLocation.Equals("noImage"))
-                pictureBox1.Image = Properties.Resources.No_image_available; 
-
-            else
-            {
-                pictureBox1.ImageLocation = imageLocation;
-                pictureBox1.Load();
-            }
-        }
-
-        #endregion
-
-        #endregion
 
         #region Text Changes
 
@@ -158,8 +104,6 @@ namespace JapaneseApp
                 richTextBox.Clear();
             }
         }
-
-        string suggestedSearch = "";
 
         public void UpdateText()
         {
@@ -178,35 +122,14 @@ namespace JapaneseApp
             }
             EnhanceTextBox.Text = dataGridView1.CurrentCell.Value.ToString();
 
-            japaneseTextBox.Text = printJapanesesWithPartsOfSpeech();
             EnglishDefinitionTextBox.Text = printEnglishDefinitions();
 
-            /*
-             * set suggestedSearchTextBox to the second line of EnglishDefinitionTextBox
-             * E.g.
-             * EnglishDefinitonsTextBox.Text = "English Definitions:\nDog" -> suggestedSearchTextBox.Text = "Dog"
-             */
-            StringReader strReader = new StringReader(EnglishDefinitionTextBox.Text);
-            strReader.ReadLine();
-            suggestedSearch = strReader.ReadLine();
-        }
-
-        public string printJapaneses()
-        {
-            return printList("Japanese:\n", jsonController.getJapaneses());
         }
 
         public string printEnglishDefinitions()
         {
             return printList("English Words:\n", jsonController.getEnglishDefinitions());
         }
-
-        public string printJapanesesWithPartsOfSpeech()
-        {
-            return printList("Japanese Words:\n", jsonController.getJapaneseWithPartOfSpeech());
-        }
-
-
 
         public string printList(string baseSting, List<string> list)
         {
@@ -217,37 +140,12 @@ namespace JapaneseApp
 
         #endregion
 
-        #region Searching internet using APIS
-
-        public void Search(string searchText)
-        {
-            jsonObject = jsonController.setJson(searchText);
-            SearchImage(searchText);
-        }
-
-        public void SearchImage(string searchText)
-        {            
-            imageTagSearchBox.Text = searchText;
-
-            RadioButton selectedImageQualityRadioButton = imageQualityRadioButtons.Find(x => x.Checked);
-
-            //imageLocation is a url of image or if no results imageLocation = "noImage"
-            string imageLocation = flickrApi.Search(searchText, selectedImageQualityRadioButton.Name);
-
-            if (imageLocation.Equals("noImage"))
-                pictureBox1.Image = Properties.Resources.No_image_available;
-            else
-            {
-                pictureBox1.ImageLocation = imageLocation;
-                pictureBox1.Load();
-            }
-        }
-        #endregion
-
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if(dataGridView1.CurrentCell != null && dataGridView1.CurrentCell.Value != null)
                 EnhanceTextBox.Text = dataGridView1.CurrentCell.Value.ToString();
         }
+
+   
     }
 }

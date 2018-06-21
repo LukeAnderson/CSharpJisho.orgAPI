@@ -1,0 +1,13 @@
+C:\Users\Luke\Documents\GitHub\CSharpJisho.orgAPI\bin\Debug\JapaneseApp.exe.config
+C:\Users\Luke\Documents\GitHub\CSharpJisho.orgAPI\bin\Debug\JapaneseApp.exe
+C:\Users\Luke\Documents\GitHub\CSharpJisho.orgAPI\bin\Debug\JapaneseApp.pdb
+C:\Users\Luke\Documents\GitHub\CSharpJisho.orgAPI\bin\Debug\KanaConverterLib.pdb
+C:\Users\Luke\Documents\GitHub\CSharpJisho.orgAPI\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Luke\Documents\GitHub\CSharpJisho.orgAPI\obj\Debug\CSharpJisho.orgAPi.csprojAssemblyReference.cache
+C:\Users\Luke\Documents\GitHub\CSharpJisho.orgAPI\obj\Debug\JapaneseApp.Form1.resources
+C:\Users\Luke\Documents\GitHub\CSharpJisho.orgAPI\obj\Debug\JapaneseApp.Properties.Resources.resources
+C:\Users\Luke\Documents\GitHub\CSharpJisho.orgAPI\obj\Debug\CSharpJisho.orgAPi.csproj.GenerateResource.cache
+C:\Users\Luke\Documents\GitHub\CSharpJisho.orgAPI\obj\Debug\CSharpJisho.orgAPi.csproj.CoreCompileInputs.cache
+C:\Users\Luke\Documents\GitHub\CSharpJisho.orgAPI\obj\Debug\CSharpJisho.orgAPi.csproj.CopyComplete
+C:\Users\Luke\Documents\GitHub\CSharpJisho.orgAPI\obj\Debug\JapaneseApp.exe
+C:\Users\Luke\Documents\GitHub\CSharpJisho.orgAPI\obj\Debug\JapaneseApp.pdb

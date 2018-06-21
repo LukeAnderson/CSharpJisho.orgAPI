@@ -40,8 +40,15 @@ namespace JapaneseApp
                 list.Add(JsonGetStringAtIndex(i));
             return list;
         }
-    
+
         #region Japanese
+
+        public int numOfJapaneses()
+        {
+            if (json == null)
+                throw new NullReferenceException();
+            return json.data[currentResult].japanese.Count;
+        }
 
         #region Japanese Words
 
@@ -53,7 +60,7 @@ namespace JapaneseApp
             }
             else
             {
-                throw new IndexOutOfRangeException();//wordIndex
+                throw new IndexOutOfRangeException();//wordIndex > numOfJapanese
             }
         }
 
@@ -74,7 +81,7 @@ namespace JapaneseApp
             }
             else
             {
-                throw new IndexOutOfRangeException();//readingIndex
+                throw new IndexOutOfRangeException();//readingIndex > numOfJapaneses
             }
         }
 
@@ -85,47 +92,119 @@ namespace JapaneseApp
 
         #endregion
 
-        #region Japanese (get both word and reading)
+        #region Japanese Romaji
+
+        public string getRomaji(string kana)
+        {
+            return kanaRomajiConverter.Convert(kana);
+        }
+
+        public List<string> getRomajis()
+        {
+            List<string> readings = getReadings();
+            for (int i = 0; i < readings.Count; i++)
+                readings[i] = getRomaji(readings[i]);
+            return readings;
+        }
+
+        #endregion
+
+        #region Japanese (get both word, reading, romaji)
 
         public string getJapanese(int japaneseIndex)
         {
-            if (japaneseIndex < numOfJapaneses())
-            {
-                string kanji = getWord(japaneseIndex);//if there is kanji get it
-                string reading = getReading(japaneseIndex);
-                string romaji = getRomaji(reading);
-                if (string.IsNullOrWhiteSpace(kanji))
-                {
-                    return "     " + reading + "     " + romaji;
-                }
+            if(japaneseIndex >= numOfJapaneses())
+                throw new ArgumentException();
 
-                //put kanji in front of reading
-                return kanji + "     " + reading + "     " + romaji;
-            }
-            else
-            {
-                return "error japanese index out of bounds";
-            }
+            string word = getWord(japaneseIndex);
+
+            string reading = getReading(japaneseIndex);//there should always be a reading
+            if (string.IsNullOrWhiteSpace(reading))
+                throw new System.IO.InvalidDataException();
+
+            string romaji = getRomaji(reading);
+
+            if (string.IsNullOrWhiteSpace(word))
+                word = "";
+
+            return word + "     " + reading + "     " + romaji;
+            
         }
 
         public List<string> getJapaneses()
         {
             return getMultiple(numOfJapaneses(), getJapanese);
         }
+        #endregion
 
-        public string[] getJapaneseRow()
+        #endregion
+
+        #region Seneses
+
+        public int numOfSenses()
         {
-            string[] strarr = null;
-
-            List <string> words = getWords();
-            List<string> readings = getReadings();
-
-
-
-
-
-            return strarr;
+            return json.data[currentResult].senses.Count;
         }
+
+        private List<string> getMultipleSeneses(Func<int, int> numOfThisSense, Func<int, int, string> JsonGetStringAtIndices)
+        {
+            if (json == null || numOfThisSense == null || JsonGetStringAtIndices == null)
+                throw new ArgumentException();
+
+            List<string> list = new List<string>();
+
+            for (int j = 0; j < numOfSenses(); j++)
+            {
+                for (int i = 0; i < numOfThisSense(j); i++)
+                {
+                    list.Add(JsonGetStringAtIndices(j, i));
+                }
+            }
+            return list;
+        }
+
+        #region English definitions
+
+        public int numOfDefinitions(int senseIndex)
+        {
+            return json.data[currentResult].senses[senseIndex].parts_of_speech.Count;
+        }
+
+        public string getEnglishDefiniton(int sensesIndex, int englishDefinitionsIndex)
+        {
+            return json.data[currentResult].senses[sensesIndex].english_definitions[englishDefinitionsIndex];
+        }
+
+        public List<string> getEnglishDefinitions()
+        {
+            return getMultipleSeneses(numOfDefinitions, getEnglishDefiniton);
+        }
+
+        #endregion
+
+        #region partsOfSpeech
+
+        public int numOfPartsOfSpeech(int senseIndex)
+        {
+            return json.data[currentResult].senses[senseIndex].parts_of_speech.Count;
+        }
+
+        public string getPartOfSpeech(int sensesIndex, int partOfSpeechIndex)
+        {
+            string result = json.data[currentResult].senses[sensesIndex].parts_of_speech[partOfSpeechIndex];
+            if (result.Equals("Wikipedia definition"))//jisho api has some of this nonsense ignore it; Wikipedia definition should not be a part of speech
+                return "";
+            return result;
+        }
+
+        public List<string> getPartsOfSpeech()
+        {
+            return getMultipleSeneses(numOfPartsOfSpeech, getPartOfSpeech);
+        }
+
+        #endregion
+
+        #endregion
 
         public List<string[]> getRows()
         {
@@ -141,7 +220,7 @@ namespace JapaneseApp
             int max = readings.Count;//reading ought to be the most
 
             //make all the rows
-            for(int i = 0; i < readings.Count; i++)
+            for (int i = 0; i < readings.Count; i++)
             {
                 string[] row = new string[4];
                 rows.Add(row);
@@ -151,151 +230,31 @@ namespace JapaneseApp
             //add kanji, readings, romaji, PartsOfSpeech
             for (int i = 0; i < readings.Count; i++)
             {
-                rows[i][0] = i > words.Count ? "" : words[i];
+                rows[i][0] = i >= words.Count ? "" : words[i];
                 rows[i][1] = readings[i];
                 rows[i][2] = romajis[i];
-                rows[i][3] = i > partsOfSpeech.Count ? "" : partsOfSpeech[i];
+                rows[i][3] = i >= partsOfSpeech.Count ? "" : partsOfSpeech[i];
             }
             return rows;
         }
 
-
-
-
-        public string getRomaji(string kana)
-        {
-            return kanaRomajiConverter.Convert(kana);
-        }
-
-        public List<string> getRomajis()
-        {
-            List<string> readings = getReadings();
-            for(int i = 0;i < readings.Count; i++)
-                readings[i] = getRomaji(readings[i]);
-            return readings;
-        }
-
-        #endregion
-
-        public int numOfJapaneses()
-        {
-            if(json == null)
-            {
-                throw new NullReferenceException();
-            }
-            try
-            {
-                return json.data[currentResult].japanese.Count;
-            }catch (ArgumentOutOfRangeException)
-            {
-                return -1;
-            }
-        }
-        #endregion
-
-        #region Seneses
-
-        #region English definitions
-
-        public string getEnglishDefiniton(int sensesIndex, int englishDefinitionsIndex)
-        {
-            return json.data[currentResult].senses[sensesIndex].english_definitions[englishDefinitionsIndex];
-        }
-
-        public List<string> getEnglishDefinitions()
-        {
-            List<string> definitions = new List<string>();
-            for (int j = 0; j < numOfSenses(); j++)
-            {
-                for (int i = 0; i < numOfDefinitions(j); i++)
-                    definitions.Add(getEnglishDefiniton(j, i));
-
-            }
-            return definitions;
-        }
-
-        #endregion
-
-        #region partsOfSpeech
-
-        public string getPartOfSpeech(int sensesIndex, int partOfSpeechIndex)
-        {
-            string result = json.data[currentResult].senses[sensesIndex].parts_of_speech[partOfSpeechIndex];
-            if (result.Equals("Wikipedia definition"))//jisho api has some of this nonsense ignore it; Wikipedia definition should not be a part of speech
-                return "";
-            return result;
-        }
-
-        public List<string> getPartsOfSpeech()
-        {
-            List<string> partsOfSpeech = new List<string>();
-            for (int j = 0; j < numOfSenses(); j++)
-            {
-                for (int i = 0; i < numOfPartsOfSpeech(j); i++)
-                    partsOfSpeech.Add(getPartOfSpeech(j, i));
-
-            }
-            return partsOfSpeech;
-        }
-
-
-        public List<string> getJapaneseWithPartOfSpeech()
-        {
-            List<string> pos = getPartsOfSpeech();
-            List<string> japaneses = getJapaneses();
-
-            for(int i = 0; i < numOfJapaneses(); i++)
-            {
-                if (i >= pos.Count) break;
-                japaneses[i] = japaneses[i] + "     " + pos[i];
-            }
-
-            return japaneses;
-        }
-
-        #endregion
-
-        #endregion
-
         #region Jisho.org Api
-
-        public string Search(string query)
-        {
-            return webClient.DownloadString("https://jisho.org/api/v1/search/words?keyword=\"" + query.ToLower() + "\"");
-        }
-
-        public RootObject setJson(string query)
-        {
-            json = JsonConvert.DeserializeObject<RootObject>(Search(query));//use Newtonsoft.json to convert json from web to RootObject
-            if (numOfResults() == 0)
-                json = null;
-            currentResult = 0;
-            return json;
-        }
-
-        #region getting num of results 
-
-        public int numOfSenses()
-        {
-            return json.data[currentResult].senses.Count;
-        }
-
-        public int numOfDefinitions(int senseIndex)
-        {
-            return json.data[currentResult].senses[senseIndex].english_definitions.Count;
-        }
-
-        public int numOfPartsOfSpeech(int senseIndex)
-        {
-            return json.data[currentResult].senses[senseIndex].parts_of_speech.Count;
-        }
 
         public int numOfResults()
         {
             return json.data.Count;
         }
+        public RootObject setJson(string query)
+        {
+            query = webClient.DownloadString("https://jisho.org/api/v1/search/words?keyword=\"" + query.ToLower() + "\"");
 
-        #endregion
+            //use Newtonsoft.json to convert json from web to RootObject
+            json = JsonConvert.DeserializeObject<RootObject>(query);
+            if (numOfResults() == 0)
+                json = null;
+            currentResult = 0;
+            return json;
+        }
 
         /*update to next result
          * E.g
