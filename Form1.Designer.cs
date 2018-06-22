@@ -34,23 +34,27 @@
             this.fontToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.englishDefinitionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.japaneseDefinitionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.zoomedCellToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.searchPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.nextButton = new System.Windows.Forms.Button();
-            this.searchTextbox = new System.Windows.Forms.RichTextBox();
             this.searchButton = new System.Windows.Forms.Button();
+            this.searchTextbox = new System.Windows.Forms.RichTextBox();
+            this.nextButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.tableLayoutPanelEnglishWordsAndEnhance = new System.Windows.Forms.TableLayoutPanel();
-            this.EnhanceTextBox = new System.Windows.Forms.RichTextBox();
             this.EnglishDefinitionTextBox = new System.Windows.Forms.RichTextBox();
+            this.EnhanceTextBox = new System.Windows.Forms.RichTextBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.PartOfSpeechColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.RomajiColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.KanaColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.KanjiColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.KanaColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.RomajiColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PartOfSpeechColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.JishoTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.zoomedCellToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.LinksColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TagsColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.IsCommonColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.AttributionColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.menuStrip1.SuspendLayout();
             this.searchPanel.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -67,7 +71,7 @@
             this.fontToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1098, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1421, 24);
             this.menuStrip1.TabIndex = 6;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -84,16 +88,23 @@
             // englishDefinitionToolStripMenuItem
             // 
             this.englishDefinitionToolStripMenuItem.Name = "englishDefinitionToolStripMenuItem";
-            this.englishDefinitionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.englishDefinitionToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
             this.englishDefinitionToolStripMenuItem.Text = "English";
             this.englishDefinitionToolStripMenuItem.Click += new System.EventHandler(this.englishDefinitionToolStripMenuItem_Click);
             // 
             // japaneseDefinitionToolStripMenuItem
             // 
             this.japaneseDefinitionToolStripMenuItem.Name = "japaneseDefinitionToolStripMenuItem";
-            this.japaneseDefinitionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.japaneseDefinitionToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
             this.japaneseDefinitionToolStripMenuItem.Text = "Japanese";
             this.japaneseDefinitionToolStripMenuItem.Click += new System.EventHandler(this.japaneseDefinitionToolStripMenuItem_Click);
+            // 
+            // zoomedCellToolStripMenuItem
+            // 
+            this.zoomedCellToolStripMenuItem.Name = "zoomedCellToolStripMenuItem";
+            this.zoomedCellToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.zoomedCellToolStripMenuItem.Text = "Zoomed Cell";
+            this.zoomedCellToolStripMenuItem.Click += new System.EventHandler(this.zoomedCellToolStripMenuItem_Click);
             // 
             // searchPanel
             // 
@@ -110,20 +121,20 @@
             this.searchPanel.Name = "searchPanel";
             this.searchPanel.RowCount = 1;
             this.searchPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.searchPanel.Size = new System.Drawing.Size(761, 73);
+            this.searchPanel.Size = new System.Drawing.Size(987, 73);
             this.searchPanel.TabIndex = 1;
             // 
-            // nextButton
+            // searchButton
             // 
-            this.nextButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.nextButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nextButton.Location = new System.Drawing.Point(635, 3);
-            this.nextButton.Name = "nextButton";
-            this.nextButton.Size = new System.Drawing.Size(123, 67);
-            this.nextButton.TabIndex = 5;
-            this.nextButton.Text = "Next";
-            this.nextButton.UseVisualStyleBackColor = true;
-            this.nextButton.Click += new System.EventHandler(this.nextButton_Click);
+            this.searchButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.searchButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.searchButton.Location = new System.Drawing.Point(597, 3);
+            this.searchButton.Name = "searchButton";
+            this.searchButton.Size = new System.Drawing.Size(220, 67);
+            this.searchButton.TabIndex = 4;
+            this.searchButton.Text = "Search";
+            this.searchButton.UseVisualStyleBackColor = true;
+            this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
             // 
             // searchTextbox
             // 
@@ -132,22 +143,22 @@
             this.searchTextbox.ForeColor = System.Drawing.SystemColors.InactiveCaptionText;
             this.searchTextbox.Location = new System.Drawing.Point(3, 3);
             this.searchTextbox.Name = "searchTextbox";
-            this.searchTextbox.Size = new System.Drawing.Size(452, 67);
+            this.searchTextbox.Size = new System.Drawing.Size(588, 67);
             this.searchTextbox.TabIndex = 3;
             this.searchTextbox.Text = "Search Words";
             this.searchTextbox.GotFocus += new System.EventHandler(this.searchTextbox_GotFocus);
             // 
-            // searchButton
+            // nextButton
             // 
-            this.searchButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.searchButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.searchButton.Location = new System.Drawing.Point(461, 3);
-            this.searchButton.Name = "searchButton";
-            this.searchButton.Size = new System.Drawing.Size(168, 67);
-            this.searchButton.TabIndex = 4;
-            this.searchButton.Text = "Search";
-            this.searchButton.UseVisualStyleBackColor = true;
-            this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
+            this.nextButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.nextButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.nextButton.Location = new System.Drawing.Point(823, 3);
+            this.nextButton.Name = "nextButton";
+            this.nextButton.Size = new System.Drawing.Size(161, 67);
+            this.nextButton.TabIndex = 5;
+            this.nextButton.Text = "Next";
+            this.nextButton.UseVisualStyleBackColor = true;
+            this.nextButton.Click += new System.EventHandler(this.nextButton_Click);
             // 
             // tableLayoutPanel2
             // 
@@ -160,8 +171,8 @@
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 55.05618F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(331, 554);
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 554F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(428, 554);
             this.tableLayoutPanel2.TabIndex = 4;
             // 
             // panel2
@@ -171,7 +182,7 @@
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Margin = new System.Windows.Forms.Padding(0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(331, 554);
+            this.panel2.Size = new System.Drawing.Size(428, 554);
             this.panel2.TabIndex = 2;
             // 
             // tableLayoutPanelEnglishWordsAndEnhance
@@ -186,21 +197,8 @@
             this.tableLayoutPanelEnglishWordsAndEnhance.Name = "tableLayoutPanelEnglishWordsAndEnhance";
             this.tableLayoutPanelEnglishWordsAndEnhance.RowCount = 1;
             this.tableLayoutPanelEnglishWordsAndEnhance.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanelEnglishWordsAndEnhance.Size = new System.Drawing.Size(331, 554);
+            this.tableLayoutPanelEnglishWordsAndEnhance.Size = new System.Drawing.Size(428, 554);
             this.tableLayoutPanelEnglishWordsAndEnhance.TabIndex = 7;
-            // 
-            // EnhanceTextBox
-            // 
-            this.EnhanceTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.EnhanceTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.EnhanceTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.EnhanceTextBox.Location = new System.Drawing.Point(165, 0);
-            this.EnhanceTextBox.Margin = new System.Windows.Forms.Padding(0);
-            this.EnhanceTextBox.Name = "EnhanceTextBox";
-            this.EnhanceTextBox.ReadOnly = true;
-            this.EnhanceTextBox.Size = new System.Drawing.Size(166, 554);
-            this.EnhanceTextBox.TabIndex = 6;
-            this.EnhanceTextBox.Text = "";
             // 
             // EnglishDefinitionTextBox
             // 
@@ -211,9 +209,22 @@
             this.EnglishDefinitionTextBox.Margin = new System.Windows.Forms.Padding(0);
             this.EnglishDefinitionTextBox.Name = "EnglishDefinitionTextBox";
             this.EnglishDefinitionTextBox.ReadOnly = true;
-            this.EnglishDefinitionTextBox.Size = new System.Drawing.Size(165, 554);
+            this.EnglishDefinitionTextBox.Size = new System.Drawing.Size(214, 554);
             this.EnglishDefinitionTextBox.TabIndex = 5;
             this.EnglishDefinitionTextBox.Text = "English Words:";
+            // 
+            // EnhanceTextBox
+            // 
+            this.EnhanceTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.EnhanceTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.EnhanceTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.EnhanceTextBox.Location = new System.Drawing.Point(214, 0);
+            this.EnhanceTextBox.Margin = new System.Windows.Forms.Padding(0);
+            this.EnhanceTextBox.Name = "EnhanceTextBox";
+            this.EnhanceTextBox.ReadOnly = true;
+            this.EnhanceTextBox.Size = new System.Drawing.Size(214, 554);
+            this.EnhanceTextBox.TabIndex = 6;
+            this.EnhanceTextBox.Text = "";
             // 
             // dataGridView1
             // 
@@ -233,7 +244,11 @@
             this.KanjiColumn,
             this.KanaColumn,
             this.RomajiColumn,
-            this.PartOfSpeechColumn});
+            this.PartOfSpeechColumn,
+            this.LinksColumn,
+            this.TagsColumn,
+            this.IsCommonColumn,
+            this.AttributionColumn});
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -246,21 +261,15 @@
             this.dataGridView1.Location = new System.Drawing.Point(3, 3);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(755, 469);
+            this.dataGridView1.Size = new System.Drawing.Size(981, 469);
             this.dataGridView1.TabIndex = 3;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             // 
-            // PartOfSpeechColumn
+            // KanjiColumn
             // 
-            this.PartOfSpeechColumn.HeaderText = "Part Of Speech";
-            this.PartOfSpeechColumn.Name = "PartOfSpeechColumn";
-            this.PartOfSpeechColumn.ReadOnly = true;
-            // 
-            // RomajiColumn
-            // 
-            this.RomajiColumn.HeaderText = "Romaji";
-            this.RomajiColumn.Name = "RomajiColumn";
-            this.RomajiColumn.ReadOnly = true;
+            this.KanjiColumn.HeaderText = "Kanji";
+            this.KanjiColumn.Name = "KanjiColumn";
+            this.KanjiColumn.ReadOnly = true;
             // 
             // KanaColumn
             // 
@@ -268,11 +277,17 @@
             this.KanaColumn.Name = "KanaColumn";
             this.KanaColumn.ReadOnly = true;
             // 
-            // KanjiColumn
+            // RomajiColumn
             // 
-            this.KanjiColumn.HeaderText = "Kanji";
-            this.KanjiColumn.Name = "KanjiColumn";
-            this.KanjiColumn.ReadOnly = true;
+            this.RomajiColumn.HeaderText = "Romaji";
+            this.RomajiColumn.Name = "RomajiColumn";
+            this.RomajiColumn.ReadOnly = true;
+            // 
+            // PartOfSpeechColumn
+            // 
+            this.PartOfSpeechColumn.HeaderText = "Part Of Speech";
+            this.PartOfSpeechColumn.Name = "PartOfSpeechColumn";
+            this.PartOfSpeechColumn.ReadOnly = true;
             // 
             // tableLayoutPanel1
             // 
@@ -290,37 +305,54 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 80.32491F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1098, 554);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1421, 554);
             this.tableLayoutPanel1.TabIndex = 5;
             // 
             // JishoTableLayoutPanel
             // 
             this.JishoTableLayoutPanel.ColumnCount = 1;
             this.JishoTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.JishoTableLayoutPanel.Controls.Add(this.dataGridView1, 0, 0);
             this.JishoTableLayoutPanel.Controls.Add(this.searchPanel, 0, 1);
+            this.JishoTableLayoutPanel.Controls.Add(this.dataGridView1, 0, 0);
             this.JishoTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.JishoTableLayoutPanel.Location = new System.Drawing.Point(334, 3);
+            this.JishoTableLayoutPanel.Location = new System.Drawing.Point(431, 3);
             this.JishoTableLayoutPanel.Name = "JishoTableLayoutPanel";
             this.JishoTableLayoutPanel.RowCount = 2;
             this.JishoTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 86.78815F));
             this.JishoTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 13.21185F));
-            this.JishoTableLayoutPanel.Size = new System.Drawing.Size(761, 548);
+            this.JishoTableLayoutPanel.Size = new System.Drawing.Size(987, 548);
             this.JishoTableLayoutPanel.TabIndex = 5;
             // 
-            // zoomedCellToolStripMenuItem
+            // LinksColumn
             // 
-            this.zoomedCellToolStripMenuItem.Name = "zoomedCellToolStripMenuItem";
-            this.zoomedCellToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.zoomedCellToolStripMenuItem.Text = "Zoomed Cell";
-            this.zoomedCellToolStripMenuItem.Click += new System.EventHandler(this.zoomedCellToolStripMenuItem_Click);
+            this.LinksColumn.HeaderText = "Links";
+            this.LinksColumn.Name = "LinksColumn";
+            this.LinksColumn.ReadOnly = true;
+            // 
+            // TagsColumn
+            // 
+            this.TagsColumn.HeaderText = "Tags";
+            this.TagsColumn.Name = "TagsColumn";
+            this.TagsColumn.ReadOnly = true;
+            // 
+            // IsCommonColumn
+            // 
+            this.IsCommonColumn.HeaderText = "IsCommon";
+            this.IsCommonColumn.Name = "IsCommonColumn";
+            this.IsCommonColumn.ReadOnly = true;
+            // 
+            // AttributionColumn
+            // 
+            this.AttributionColumn.HeaderText = "Attribution";
+            this.AttributionColumn.Name = "AttributionColumn";
+            this.AttributionColumn.ReadOnly = true;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(199)))), ((int)(((byte)(0)))), ((int)(((byte)(37)))));
-            this.ClientSize = new System.Drawing.Size(1098, 578);
+            this.ClientSize = new System.Drawing.Size(1421, 578);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -363,6 +395,10 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.TableLayoutPanel JishoTableLayoutPanel;
         private System.Windows.Forms.ToolStripMenuItem zoomedCellToolStripMenuItem;
+        private System.Windows.Forms.DataGridViewTextBoxColumn LinksColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TagsColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn IsCommonColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn AttributionColumn;
     }
 }
 

@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Text;
 
@@ -27,20 +28,6 @@ namespace JapaneseApp
             currentResult = 0;
         }
 
-        /* Makes list of strings 
-         * does so by calling a function that gets a single string at an index
-         */
-        private List<string> getMultiple(int maxIndex, Func<int, string> JsonGetStringAtIndex)
-        {
-            if (json == null || maxIndex < 0 || JsonGetStringAtIndex == null)
-                throw new ArgumentException();
-          
-            List<string> list = new List<string>();
-            for (int i = 0; i < maxIndex; i++)
-                list.Add(JsonGetStringAtIndex(i));
-            return list;
-        }
-
         #region Japanese
 
         public int numOfJapaneses()
@@ -50,17 +37,28 @@ namespace JapaneseApp
             return json.data[currentResult].japanese.Count;
         }
 
+        private List<string> getMultiple(int maxIndex, Func<int, string> JsonGetStringAtIndex)
+        {
+            if (json == null || maxIndex < 0 || JsonGetStringAtIndex == null)
+                throw new ArgumentException();
+
+            List<string> list = new List<string>();
+            for (int i = 0; i < maxIndex; i++)
+                list.Add(JsonGetStringAtIndex(i));
+            return list;
+        }
+
         #region Japanese Words
 
-        public string getWord(int wordIndex)
+        public string getWord(int japaneseIndex)
         {
-            if (wordIndex < numOfJapaneses())
+            if (japaneseIndex < numOfJapaneses())
             {
-                return json.data[currentResult].japanese[wordIndex].word;
+                return json.data[currentResult].japanese[japaneseIndex].word;
             }
             else
             {
-                throw new IndexOutOfRangeException();//wordIndex > numOfJapanese
+                throw new IndexOutOfRangeException();//japaneseIndex >= numOfJapanese
             }
         }
 
@@ -73,18 +71,17 @@ namespace JapaneseApp
 
         #region Japanese Readings
 
-        public string getReading(int readingIndex)
+        public string getReading(int japaneseIndex)
         {
-            if (readingIndex < numOfJapaneses())
+            if (japaneseIndex < numOfJapaneses())
             {
-                return json.data[currentResult].japanese[readingIndex].reading;
+                return json.data[currentResult].japanese[japaneseIndex].reading;
             }
             else
             {
-                throw new IndexOutOfRangeException();//readingIndex > numOfJapaneses
+                throw new IndexOutOfRangeException();//japaneseIndex >= numOfJapaneses
             }
         }
-
         public List<string> getReadings()
         {
             return getMultiple(numOfJapaneses(), getReading);
@@ -111,42 +108,27 @@ namespace JapaneseApp
 
         #region Japanese (get both word, reading, romaji)
 
-        public string getJapanese(int japaneseIndex)
+        public Japanese getJapanese(int japaneseIndex)
         {
-            if(japaneseIndex >= numOfJapaneses())
-                throw new ArgumentException();
-
-            string word = getWord(japaneseIndex);
-
-            string reading = getReading(japaneseIndex);//there should always be a reading
-            if (string.IsNullOrWhiteSpace(reading))
-                throw new System.IO.InvalidDataException();
-
-            string romaji = getRomaji(reading);
-
-            if (string.IsNullOrWhiteSpace(word))
-                word = "";
-
-            return word + "     " + reading + "     " + romaji;
-            
+           return getJapaneses()[japaneseIndex];
+        }
+        public List<Japanese> getJapaneses()
+        {
+           return json.data[currentResult].japanese;
         }
 
-        public List<string> getJapaneses()
-        {
-            return getMultiple(numOfJapaneses(), getJapanese);
-        }
         #endregion
 
         #endregion
 
-        #region Seneses
+        #region Senses
 
         public int numOfSenses()
         {
             return json.data[currentResult].senses.Count;
         }
 
-        private List<string> getMultipleSeneses(Func<int, int> numOfThisSense, Func<int, int, string> JsonGetStringAtIndices)
+        private List<string> getMultipleStringSenses(Func<int, int> numOfThisSense, Func<int, int, string> JsonGetStringAtIndices)
         {
             if (json == null || numOfThisSense == null || JsonGetStringAtIndices == null)
                 throw new ArgumentException();
@@ -162,22 +144,39 @@ namespace JapaneseApp
             }
             return list;
         }
+        private List<object> getMultipleObjectSenses(Func<int, int> numOfThisSense, Func<int, int, object> JsonGetStringAtIndices)
+        {
+            if (json == null || numOfThisSense == null || JsonGetStringAtIndices == null)
+                throw new ArgumentException();
+
+            List<object> list = new List<object>();
+
+            for (int j = 0; j < numOfSenses(); j++)
+            {
+                for (int i = 0; i < numOfThisSense(j); i++)
+                {
+                    list.Add(JsonGetStringAtIndices(j, i));
+                }
+            }
+            return list;
+        }
+
 
         #region English definitions
 
         public int numOfDefinitions(int senseIndex)
         {
-            return json.data[currentResult].senses[senseIndex].parts_of_speech.Count;
+            return json.data[currentResult].senses[senseIndex].english_definitions.Count;
         }
 
-        public string getEnglishDefiniton(int sensesIndex, int englishDefinitionsIndex)
+        public string getEnglishDefiniton(int senseIndex, int englishDefinitionsIndex)
         {
-            return json.data[currentResult].senses[sensesIndex].english_definitions[englishDefinitionsIndex];
+            return json.data[currentResult].senses[senseIndex].english_definitions[englishDefinitionsIndex];
         }
 
         public List<string> getEnglishDefinitions()
         {
-            return getMultipleSeneses(numOfDefinitions, getEnglishDefiniton);
+            return getMultipleStringSenses(numOfDefinitions, getEnglishDefiniton);
         }
 
         #endregion
@@ -199,12 +198,75 @@ namespace JapaneseApp
 
         public List<string> getPartsOfSpeech()
         {
-            return getMultipleSeneses(numOfPartsOfSpeech, getPartOfSpeech);
+            return getMultipleStringSenses(numOfPartsOfSpeech, getPartOfSpeech);
         }
 
         #endregion
 
+        #region links
+
+        public int numOfLinks(int senseIndex)
+        {
+            return json.data[currentResult].senses[senseIndex].links.Count;
+        }
+
+        public object getLink(int senseIndex, int linkIndex)
+        {
+            return json.data[currentResult].senses[senseIndex].links[linkIndex];
+        }
+
+        public List<object> getLinks()
+        {
+            return getMultipleObjectSenses(numOfLinks, getLink);
+        }
+
+        public string getLinkText(int senseIndex, int linkIndex)
+        {
+            return json.data[currentResult].senses[senseIndex].links[linkIndex].text;
+        }
+        public string getLinkUrl(int senseIndex, int linkIndex)
+        {
+            return json.data[currentResult].senses[senseIndex].links[linkIndex].url;
+        }
         #endregion
+
+        #region tags
+
+
+        public int numOfTags(int senseIndex)
+        {
+            return json.data[currentResult].senses[senseIndex].tags.Count;
+        }
+
+        public string getTag(int senseIndex, int tagIndex)
+        {
+            return json.data[currentResult].senses[senseIndex].tags[tagIndex];
+        }
+
+        public List<string> getTags()
+        {
+            return getMultipleStringSenses(numOfTags, getTag);
+        }
+
+
+
+
+        #endregion
+
+        #endregion
+
+        public bool isCommon(int index)
+        {
+            return json.data[index].is_common;
+        }
+
+        public Attribution getAttribution(int index)
+        {
+            return json.data[index].attribution;
+        }
+
+
+
 
         public List<string[]> getRows()
         {
@@ -216,13 +278,18 @@ namespace JapaneseApp
             List<string> romajis = getRomajis();
             List<string> partsOfSpeech = getPartsOfSpeech();
 
+            //reading ought to be the most out of these 4
+            int max = readings.Count;
 
-            int max = readings.Count;//reading ought to be the most
+            List<Link> links = getLinks().Cast<Link>().ToList();
+            List<string> tags = getTags();
+
+
 
             //make all the rows
             for (int i = 0; i < readings.Count; i++)
             {
-                string[] row = new string[4];
+                string[] row = new string[8];
                 rows.Add(row);
             }
 
@@ -234,6 +301,12 @@ namespace JapaneseApp
                 rows[i][1] = readings[i];
                 rows[i][2] = romajis[i];
                 rows[i][3] = i >= partsOfSpeech.Count ? "" : partsOfSpeech[i];
+                rows[i][4] = i >= links.Count ? "" : "text: " + links[i].text + "\nurl: " + links[i].url;
+                rows[i][5] = i >= tags.Count ? "" : tags[i];
+                rows[i][6] = isCommon(i).ToString();
+
+                Attribution currAttribution = getAttribution(i);
+                rows[i][7] = "jmdict: " + currAttribution.jmdict.ToString() + "\njmnedict: " + currAttribution.jmnedict.ToString() + "\ndbpedia: "  + currAttribution.dbpedia;
             }
             return rows;
         }

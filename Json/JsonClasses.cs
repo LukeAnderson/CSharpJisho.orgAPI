@@ -73,31 +73,44 @@ namespace JapaneseApp
         public string reading { get; set; }
     }
 
+    #region Senses
+
     public class Sense
     {
         public List<string> english_definitions { get; set; }
         public List<string> parts_of_speech { get; set; }
-        public List<object> links { get; set; }
-        public List<object> tags { get; set; }
+        public List<Link> links { get; set; }
+        public List<string> tags { get; set; }
+
+        //As of 6/21/18
+        //these are all emptpy -> the jisho.org API has not implemented these fully
         public List<object> restrictions { get; set; }
-        public List<object> see_also { get; set; }
+        public List<object> see_also { get; set; }//see_also rarely has a result
         public List<object> antonyms { get; set; }
         public List<object> source { get; set; }
         public List<object> info { get; set; }
         public List<object> sentences { get; set; }
     }
 
+    public class Link
+    {
+        public string text { get; set; }
+        public string url { get; set; }
+    }
+
+    #endregion
+
     public class Attribution
     {
         public bool jmdict { get; set; }
         public bool jmnedict { get; set; }
-        public object dbpedia { get; set; }
+        public string dbpedia { get; set; }
     }
 
     public class Datum
     {
         public bool is_common { get; set; }
-        public List<object> tags { get; set; }
+        public List<string> tags { get; set; }
         public List<Japanese> japanese { get; set; }
         public List<Sense> senses { get; set; }
         public Attribution attribution { get; set; }
