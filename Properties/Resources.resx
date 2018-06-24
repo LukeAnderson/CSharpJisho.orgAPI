@@ -118,13 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="No_image_available" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\No_image_available.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="MontainExample1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\MontainExample1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="JapaneseFlag" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\JapaneseFlag.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Japanese App Ver 1.2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Japanese App Ver 1.2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="MountainExample2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\MountainExample2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

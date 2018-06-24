@@ -90,19 +90,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\JapaneseFlag.png" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\No_image_available.png" />
+    <None Include="Resources\MontainExample1.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Starting Photo.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\JapaneseAppVer1.1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Japanese App Ver 1.2.png" />
+    <None Include="Resources\MountainExample2.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

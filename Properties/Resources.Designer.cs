@@ -63,9 +63,9 @@ namespace JapaneseApp.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Japanese_App_Ver_1_2 {
+        internal static System.Drawing.Bitmap MontainExample1 {
             get {
-                object obj = ResourceManager.GetObject("Japanese App Ver 1.2", resourceCulture);
+                object obj = ResourceManager.GetObject("MontainExample1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -73,19 +73,9 @@ namespace JapaneseApp.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap JapaneseFlag {
+        internal static System.Drawing.Bitmap MountainExample2 {
             get {
-                object obj = ResourceManager.GetObject("JapaneseFlag", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap No_image_available {
-            get {
-                object obj = ResourceManager.GetObject("No_image_available", resourceCulture);
+                object obj = ResourceManager.GetObject("MountainExample2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
