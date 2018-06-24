@@ -7,6 +7,7 @@ Taken from [JapaneseApp](https://github.com/LukeAnderson/JapaneseApp) a study as
 
 #### Example:
 Search for a word or phrase:
+
 ![Mountain Example 2](https://github.com/LukeAnderson/CSharpJisho.orgAPI/raw/master/Resources/MountainExample1.png)
 
 
