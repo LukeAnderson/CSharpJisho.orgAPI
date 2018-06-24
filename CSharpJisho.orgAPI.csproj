@@ -93,10 +93,10 @@
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\MontainExample1.png" />
+    <None Include="Resources\MountainExample2.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\MountainExample2.png" />
+    <None Include="Resources\MountainExample1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
